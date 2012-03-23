@@ -11,7 +11,7 @@ import sys
 
 
 def list(username, hostname, reporoot, regexFilter=None):
-    command = ['ssh', '%s@%s' % (username, hostname), 'find', reporoot, '-name', '*.git']
+    command = ['ssh', '%s@%s' % (username, hostname), 'find', reporoot, '-name', '*.git', '-type', 'd']
 
     stdout = subprocess.check_output(command)
     repos = stdout.strip().split("\n")
