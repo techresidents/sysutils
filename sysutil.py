@@ -5,11 +5,11 @@ import json
 import logging
 import os
 import pprint
-import re
 import socket
 import sys
 import traceback
 
+DEFAULT_ROOT = "/opt/tr/etc"
 
 class SystemConfig(object):
     def __init__(self, syshosts, sysgroups, sysversions):
@@ -195,7 +195,7 @@ def groupsCommandHandler(sysconfig, args):
             group_filter = list_filter(args.groups))
 
     for group in groups:
-        log.info(args.format.format(**group))
+        log.info(args.format.format(**group).replace("\\n", "\n"))
 
 
 groupsCommandHandler.examples = """Examples:
@@ -214,7 +214,7 @@ def packagesCommandHandler(sysconfig, args):
             package_filter = list_filter(args.packages))
 
     for package in packages:
-        log.info(args.format.format(**package))
+        log.info(args.format.format(**package).replace("\\n", "\n"))
 
 
 packagesCommandHandler.examples = """Examples:
@@ -225,7 +225,8 @@ packagesCommandHandler.examples = """Examples:
 def main(argv):
 
     def parse_arguments():
-        parser = argparse.ArgumentParser(description="sysutil.py is a helper for working with 30and30 system files.")
+        parser = argparse.ArgumentParser(description="sysutil.py is a helper for working with tech residents system files.")
+        parser.add_argument("-r", "--root", default=DEFAULT_ROOT, help="root directory containing syshosts, sysgroups, and sysversion files")
 
         commandParsers = parser.add_subparsers()
         
@@ -274,9 +275,9 @@ def main(argv):
     args = parse_arguments()
 
     try:
-        syshosts = json.loads(open("/opt/30and30/etc/syshosts").read())
-        sysgroups = json.loads(open("/opt/30and30/etc/sysgroups").read())
-        sysversions = json.loads(open("/opt/30and30/etc/sysversions").read())
+        syshosts = json.loads(open(os.path.join(args.root, "syshosts")).read())
+        sysgroups = json.loads(open(os.path.join(args.root, "sysgroups")).read())
+        sysversions = json.loads(open(os.path.join(args.root, "sysversions")).read())
 
         sysconfig = SystemConfig(syshosts, sysgroups, sysversions)
 

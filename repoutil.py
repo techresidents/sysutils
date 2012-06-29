@@ -91,10 +91,10 @@ cloneCommandHandler.examples = """Examples:
 def main(argv):
 
     def parse_arguments():
-        parser = argparse.ArgumentParser(description="repotutil.py is a helper for working with 30and30 git repositories.")
+        parser = argparse.ArgumentParser(description="repotutil.py is a helper for working with tech residents git repositories.")
         parser.add_argument("-u", "--username", default=getpass.getuser())
-        parser.add_argument("-H", "--hostname", default="dev.30and30.com")
-        parser.add_argument("-r", "--reporoot", default="/30and30/repos/")
+        parser.add_argument("-H", "--hostname", default="dev.techresidents.com")
+        parser.add_argument("-r", "--reporoot", default="/tr/repos/")
 
         commandParsers = parser.add_subparsers()
 
