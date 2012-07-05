@@ -162,6 +162,8 @@ def list_filter(items=None):
 
 def localhost_filter(additional_hosts=None):
     hosts = list(additional_hosts or [])
+    hosts.append(socket.gethostname())
+
     hostname, aliases, ip_addresses = socket.gethostbyname_ex(socket.gethostname())
     hosts.append(hostname)
     hosts.extend(aliases)
